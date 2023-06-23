@@ -6,12 +6,15 @@
 
 上記 PSR にて決められたインターフェースを実装したスマレジ・プラットフォーム API クライアントライブラリです。
 
-## Development
+## Contributing
 
 このリポジトリは Docker の利用を推奨しています。
+
 詳細は Makefile を参照してください。
 
 ### Help
+
+各コマンドのヘルプが表示されます。
 
 ```shell
 make help
@@ -19,24 +22,22 @@ make help
 
 ### Build
 
+Docker における開発環境をビルドします。
+
 ```shell
 make build
 ```
 
-### Start development server
+### Please execute before make Pull Request.
+
+Pull Request を作成する前には `make pr` を実行してください。
+
+* formatter
+* static analyzer
+* unit test
+
+が実行されます。
 
 ```shell
-make up
-```
-
-### Fixer command.
-
-```shell
-make lint
-```
-
-### Test command.
-
-```shell
-docker compose run --rm app ./vendor/bin/phpunit
+make pr
 ```
