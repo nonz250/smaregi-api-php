@@ -5,6 +5,7 @@ $rules = [
     'array_syntax' => ['syntax' => 'short'],
     'binary_operator_spaces' => true,
     'blank_line_before_statement' => ['statements' => ['declare', 'do', 'for', 'foreach', 'if', 'switch', 'try']],
+    'blank_lines_before_namespace' => true,
     'cast_spaces' => ['space' => 'none'],
     'class_attributes_separation' => true,
     'clean_namespace' => true,
@@ -148,7 +149,6 @@ $rules = [
     'set_type_to_cast' => true, // risky
     'short_scalar_cast' => true,
     'simplified_if_return' => true,
-    'single_blank_line_before_namespace' => true,
     'single_class_element_per_statement' => true,
     'single_import_per_statement' => true,
     'single_line_after_imports' => true,
