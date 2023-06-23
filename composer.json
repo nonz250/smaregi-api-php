@@ -29,7 +29,8 @@
     "require-dev": {
         "phpunit/phpunit": "^10.2",
         "friendsofphp/php-cs-fixer": "^3.17",
-        "phpstan/phpstan": "^1.10"
+        "phpstan/phpstan": "^1.10",
+        "fakerphp/faker": "^1.23"
     },
     "suggest": {
         "nyholm/psr7": "A fast PHP7 implementation of PSR-7/PSR-17",
