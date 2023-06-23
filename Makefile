@@ -1,16 +1,16 @@
 .PHONY: build
-build: ## Commands to execute before pull request.
+build: ## Build command.
 	docker compose build
 
 .PHONY: pr
 pr: lint test ## Commands to execute before pull request.
 
 .PHONY: lint
-lint: ## Fixer Command.
+lint: ## Fixer command.
 	docker compose run --rm app ./vendor/bin/php-cs-fixer fix -vv
 
 .PHONY: test
-test: ## Testing Command.
+test: ## Testing command.
 	docker compose run --rm app ./vendor/bin/phpunit
 
 # Other commands.
