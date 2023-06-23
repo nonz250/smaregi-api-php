@@ -13,6 +13,10 @@ lint: ## Fixer command.
 test: ## Testing command.
 	docker compose run --rm app ./vendor/bin/phpunit
 
+.PHONY: analyze
+analyze: ## Static analyze command.
+	docker compose run --rm app ./vendor/bin/phpstan analyse src tests
+
 # Other commands.
 .PHONY: help
 help: ## Help command.
