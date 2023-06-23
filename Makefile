@@ -11,7 +11,7 @@ lint: ## Fixer command.
 
 .PHONY: test
 test: ## Testing command.
-	docker compose run --rm app ./vendor/bin/phpunit
+	docker compose run --rm app ./vendor/bin/phpunit --coverage-text
 
 .PHONY: analyze
 analyze: ## Static analyze command.
