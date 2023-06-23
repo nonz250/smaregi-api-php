@@ -3,7 +3,7 @@ build: ## Build command.
 	docker compose build
 
 .PHONY: pr
-pr: lint test ## Commands to execute before pull request.
+pr: lint analyze test ## Commands to execute before pull request.
 
 .PHONY: lint
 lint: ## Fixer command.
@@ -15,7 +15,7 @@ test: ## Testing command.
 
 .PHONY: analyze
 analyze: ## Static analyze command.
-	docker compose run --rm app ./vendor/bin/phpstan analyse src tests
+	docker compose run --rm app ./vendor/bin/phpstan analyze
 
 # Other commands.
 .PHONY: help
