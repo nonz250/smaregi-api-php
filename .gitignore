@@ -1,3 +1,5 @@
 /vendor/
 
+/tests/.env
+
 .php_cs.cache
