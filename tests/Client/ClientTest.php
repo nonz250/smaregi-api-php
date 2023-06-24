@@ -12,8 +12,8 @@ use Nonz250\SmaregiApiPhp\Foundation\Credential;
 use Nonz250\SmaregiApiPhp\Foundation\PsrFactories;
 use Nonz250\SmaregiApiPhp\Foundation\SmaregiApiHttpException;
 use Nyholm\Psr7\Factory\Psr17Factory;
-use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientExceptionInterface;
+use Tests\TestCase;
 
 final class ClientTest extends TestCase
 {
@@ -25,10 +25,10 @@ final class ClientTest extends TestCase
         $psr17Factory = new Psr17Factory();
         $psrFactory = new PsrFactories($psr17Factory, $psr17Factory, $psr17Factory, $psr17Factory);
         $this->client = new Client(
-            $psrFactory->getUriFactory()->createUri((string)getenv('SMAREGI_IDP_HOST')),
+            $psrFactory->getUriFactory()->createUri((string)$_ENV['SMAREGI_IDP_HOST']),
             new Credential(
-                (string)getenv('SMAREGI_CLIENT_ID'),
-                (string)getenv('SMAREGI_CLIENT_SECRET'),
+                (string)$_ENV['SMAREGI_CLIENT_ID'],
+                (string)$_ENV['SMAREGI_CLIENT_SECRET'],
             ),
             new \Http\Client\Curl\Client(),
             $psrFactory
@@ -42,7 +42,7 @@ final class ClientTest extends TestCase
     public function testAppAccessToken(): void
     {
         $scopes = ['pos.products:read', 'pos.customers:read'];
-        $request = (new TokenRequest((string)getenv('SMAREGI_CONTRACT_ID')))
+        $request = (new TokenRequest((string)$_ENV['SMAREGI_CONTRACT_ID']))
             ->withScopes($scopes);
         $response = $this->client->token($request);
         $this->assertSame(implode(' ', $scopes), $response['scope']);
@@ -72,7 +72,7 @@ final class ClientTest extends TestCase
 
         // Scope is empty.
         try {
-            $request = (new TokenRequest((string)getenv('SMAREGI_CONTRACT_ID')))
+            $request = (new TokenRequest((string)$_ENV['SMAREGI_CONTRACT_ID']))
                 ->withScopes(['unknown']);
             $this->client->token($request);
         } catch (SmaregiApiHttpException $e) {
@@ -83,14 +83,14 @@ final class ClientTest extends TestCase
 
         // Credential is invalid.
         $client = new Client(
-            $psrFactory->getUriFactory()->createUri((string)getenv('SMAREGI_IDP_HOST')),
+            $psrFactory->getUriFactory()->createUri((string)$_ENV['SMAREGI_IDP_HOST']),
             new Credential($faker->text, $faker->text),
             new \Http\Client\Curl\Client(),
             $psrFactory
         );
 
         try {
-            $request = new TokenRequest((string)getenv('SMAREGI_CONTRACT_ID'));
+            $request = new TokenRequest((string)$_ENV['SMAREGI_CONTRACT_ID']);
             $client->token($request);
         } catch (SmaregiApiHttpException $e) {
             $response = $e->getResponse();
