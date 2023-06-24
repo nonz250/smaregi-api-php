@@ -35,11 +35,17 @@ final class PsrFactories
         return $this->requestFactory;
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function getResponseFactory(): ResponseFactoryInterface
     {
         return $this->responseFactory;
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function getStreamFactory(): StreamFactoryInterface
     {
         return $this->streamFactory;
