@@ -8,6 +8,9 @@ use LogicException;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\UriInterface;
 
+/**
+ * @codeCoverageIgnore
+ */
 abstract class Request
 {
     protected const PATH = '';

@@ -16,5 +16,6 @@ final class CredentialTest extends TestCase
         $clientSecret = $faker->text(64);
         $credential = new Credential($clientId, $clientSecret);
         $this->assertSame('Basic ' . base64_encode("$clientId:$clientSecret"), $credential->authorizationBasic());
+        $this->assertSame($clientId, $credential->clientId());
     }
 }

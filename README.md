@@ -4,7 +4,7 @@
 * [PSR-17: HTTP Factories - PHP-FIG](https://www.php-fig.org/psr/psr-17/)
 * [PSR-18: HTTP Client - PHP-FIG](https://www.php-fig.org/psr/psr-18/)
 
-上記 PSR にて決められたインターフェースを実装したスマレジ・プラットフォーム API クライアントライブラリです。
+上記 PSR にて決められたインターフェースで実装したスマレジ・プラットフォーム API クライアントライブラリです。
 
 ## Contributing
 

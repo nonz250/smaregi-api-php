@@ -2,6 +2,10 @@
 build: ## Build command.
 	docker compose build
 
+.PHONY: sample
+sample: ## Start sample server.
+	docker compose up -d sample
+
 .PHONY: pr
 pr: lint analyze test ## Commands to execute before pull request.
 
