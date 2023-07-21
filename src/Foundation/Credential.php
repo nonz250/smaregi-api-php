@@ -28,6 +28,11 @@ final class Credential
         ];
     }
 
+    public function clientId(): string
+    {
+        return $this->clientId;
+    }
+
     public function authorizationBasic(): string
     {
         return 'Basic ' . base64_encode("$this->clientId:$this->clientSecret");
