@@ -70,6 +70,8 @@ final class AuthorizeRequest extends Request
 
     protected function endpointUri(UriInterface $uri): UriInterface
     {
-        return $uri->withPath(self::PATH . '/' . http_build_query($this->params));
+        return $uri
+            ->withPath(self::PATH)
+            ->withQuery(http_build_query($this->params));
     }
 }
