@@ -1,5 +1,6 @@
 /vendor/
 
 /tests/.env
+/sample/public/.env
 
 .php_cs.cache
