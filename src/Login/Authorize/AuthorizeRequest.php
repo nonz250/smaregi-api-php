@@ -4,9 +4,11 @@ declare(strict_types=1);
 namespace Nonz250\SmaregiApiPhp\Login\Authorize;
 
 use Exception;
+use Nonz250\SmaregiApiPhp\Foundation\ContentType;
 use Nonz250\SmaregiApiPhp\Foundation\PkceUtil;
 use Nonz250\SmaregiApiPhp\Foundation\Request;
 use Nonz250\SmaregiApiPhp\Foundation\StringUtil;
+use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\UriInterface;
 
 final class AuthorizeRequest extends Request
@@ -26,15 +28,19 @@ final class AuthorizeRequest extends Request
     ];
 
     /**
-     * @param string $clientId
-     *
      * @throws Exception
      */
-    public function __construct(string $clientId)
+    public function __construct()
     {
-        $this->params['client_id'] = $clientId;
         $this->params['state'] = StringUtil::random();
         $this->params['code_challenge'] = (new PkceUtil())->codeChallenge();
+    }
+
+    public function withClientId(string $clientId): self
+    {
+        $new = clone $this;
+        $new->params['client_id'] = $clientId;
+        return $new;
     }
 
     /**
@@ -49,16 +55,17 @@ final class AuthorizeRequest extends Request
         return $new;
     }
 
-    /**
-     * @param string $uri
-     *
-     * @return $this
-     */
     public function withRedirectUri(string $uri): self
     {
         $new = clone $this;
         $new->params['redirect_uri'] = $uri;
         return $new;
+    }
+
+    public function toPsrRequest(RequestInterface $request, ContentType $contentType = ContentType::JSON): RequestInterface
+    {
+        return $request
+            ->withUri($this->endpointUri($request->getUri()));
     }
 
     protected function endpointUri(UriInterface $uri): UriInterface

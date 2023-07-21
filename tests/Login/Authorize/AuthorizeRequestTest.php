@@ -22,7 +22,8 @@ final class AuthorizeRequestTest extends TestCase
         $scope2 = $faker->word;
         $uri = $faker->url;
 
-        $request = (new AuthorizeRequest($clientId))
+        $request = (new AuthorizeRequest())
+            ->withClientId($clientId)
             ->withScopes([
                 $scope1,
                 $scope2,
@@ -52,7 +53,8 @@ final class AuthorizeRequestTest extends TestCase
         $this->assertSame('S256', $params['code_challenge_method']);
 
         // redirect uri.
-        $request = (new AuthorizeRequest($clientId))
+        $request = (new AuthorizeRequest())
+            ->withClientId($clientId)
             ->withRedirectUri($uri)
             ->withScopes([
                 $scope1,
