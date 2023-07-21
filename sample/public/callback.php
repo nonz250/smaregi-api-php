@@ -59,7 +59,9 @@ try {
 
     $resourceOwner = $provider->getResourceOwner($accessToken);
 
-    echo var_export($resourceOwner->toArray(), true);
+    $accessToken = $provider->getAccessToken('refresh_token', [
+        'refresh_token' => $accessToken->getRefreshToken(),
+    ]);
 } catch (Throwable $e) {
     echo $e->getMessage();
     exit();
