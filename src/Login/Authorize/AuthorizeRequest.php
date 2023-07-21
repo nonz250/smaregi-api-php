@@ -62,6 +62,12 @@ final class AuthorizeRequest extends Request
         return $new;
     }
 
+    /**
+     * @param RequestInterface $request
+     * @param ContentType $contentType
+     *
+     * @return RequestInterface
+     */
     public function toPsrRequest(RequestInterface $request, ContentType $contentType = ContentType::JSON): RequestInterface
     {
         return $request

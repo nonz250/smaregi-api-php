@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Nonz250\SmaregiApiPhp\Login;
 
 use Fig\Http\Message\RequestMethodInterface;
-use JsonException;
 use Nonz250\SmaregiApiPhp\Foundation\Credential;
 use Nonz250\SmaregiApiPhp\Foundation\PsrFactories;
 use Nonz250\SmaregiApiPhp\Login\Authorize\AuthorizeRequest;
@@ -40,7 +39,6 @@ final class Client implements \Nonz250\SmaregiApiPhp\Login\ClientInterface
      * @param AuthorizeRequest $authorizeRequest
      *
      * @throws ClientExceptionInterface
-     * @throws JsonException
      *
      * @return ResponseInterface
      */
