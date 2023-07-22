@@ -3,7 +3,8 @@ declare(strict_types=1);
 
 namespace Tests\Login;
 
-use Nonz250\SmaregiApiPhp\Login\SmaregiProvider;
+use Faker\Factory;
+use Nonz250\SmaregiApiPhp\Auth\SmaregiProvider;
 use Tests\TestCase;
 
 final class SmaregiProviderTest extends TestCase
@@ -22,9 +23,16 @@ final class SmaregiProviderTest extends TestCase
 
     public function testLogin(): void
     {
-        $this->assertNotEmpty($this->smaregiProvider->getState());
-        $this->assertNotEmpty($this->smaregiProvider->getPkceCode());
+        $faker = Factory::create();
+        $contractId = $faker->text;
         $authorizationUrl = $this->smaregiProvider->getAuthorizationUrl();
         $this->assertNotEmpty($authorizationUrl);
+        $this->assertNotEmpty($this->smaregiProvider->getState());
+        $this->assertNotEmpty($this->smaregiProvider->getPkceCode());
+        $this->assertStringContainsString('/authorize/token', $this->smaregiProvider->getBaseAccessTokenUrl([]));
+        $this->assertStringContainsString('/app/' . $contractId . '/token', $this->smaregiProvider->getBaseAccessTokenUrl([
+            'grant_type' => 'client_credentials',
+            'contract_id' => $contractId,
+        ]));
     }
 }

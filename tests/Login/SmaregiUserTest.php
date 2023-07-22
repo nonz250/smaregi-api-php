@@ -5,7 +5,7 @@ namespace Tests\Login;
 
 use Exception;
 use Faker\Factory;
-use Nonz250\SmaregiApiPhp\Login\SmaregiUser;
+use Nonz250\SmaregiApiPhp\Auth\SmaregiUser;
 use PHPUnit\Framework\TestCase;
 
 final class SmaregiUserTest extends TestCase

@@ -1,13 +1,15 @@
 <?php
 declare(strict_types=1);
 
-namespace Nonz250\SmaregiApiPhp\Login;
+namespace Nonz250\SmaregiApiPhp\Auth;
 
+use League\OAuth2\Client\OptionProvider\HttpBasicAuthOptionProvider;
 use League\OAuth2\Client\Provider\AbstractProvider;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use League\OAuth2\Client\Provider\ResourceOwnerInterface;
 use League\OAuth2\Client\Token\AccessToken;
 use League\OAuth2\Client\Tool\BearerAuthorizationTrait;
+use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use UnexpectedValueException;
 
@@ -15,7 +17,11 @@ final class SmaregiProvider extends AbstractProvider
 {
     use BearerAuthorizationTrait;
 
+    private const CONTRACT_ID = ':contractId';
+
     private const AUTHORIZATION_ENDPOINT = '/authorize';
+
+    private const APP_TOKEN_ENDPOINT = '/app/' . self::CONTRACT_ID . '/token';
 
     private const TOKEN_ENDPOINT = '/authorize/token';
 
@@ -23,7 +29,7 @@ final class SmaregiProvider extends AbstractProvider
 
     private string $host;
 
-    public function __construct(string $host, string $clientId, string $secret, string $redirectUri = '')
+    public function __construct(string $host, string $clientId, string $secret, string $redirectUri = null)
     {
         $this->host = $host;
 
@@ -37,9 +43,9 @@ final class SmaregiProvider extends AbstractProvider
             'headers' => [
                 'User-Agent' => 'nonz250/smaregi-api-php',
             ],
+        ], [
+            'optionProvider' => new HttpBasicAuthOptionProvider(),
         ]);
-
-        $this->setPkceCode($this->getRandomPkceCode());
     }
 
     public function getBaseAuthorizationUrl(): string
@@ -54,15 +60,51 @@ final class SmaregiProvider extends AbstractProvider
      */
     public function getBaseAccessTokenUrl(array $params): string
     {
+        if (array_key_exists(SmaregiClientCredentials::CONTRACT_ID_FIELD_NAME, $params) && $params['grant_type'] === 'client_credentials') {
+            return $this->host . str_replace(
+                self::CONTRACT_ID,
+                (string)$params[SmaregiClientCredentials::CONTRACT_ID_FIELD_NAME], // @phpstan-ignore-line
+                self::APP_TOKEN_ENDPOINT,
+            );
+        }
         return $this->host . self::TOKEN_ENDPOINT;
     }
 
+    /**
+     * @codeCoverageIgnore
+     *
+     * @param AccessToken $token
+     *
+     * @return string
+     */
     public function getResourceOwnerDetailsUrl(AccessToken $token): string
     {
         return $this->host . self::USER_INFO_ENDPOINT;
     }
 
     /**
+     * @codeCoverageIgnore
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return RequestInterface
+     */
+    protected function getAccessTokenRequest(array $params): RequestInterface
+    {
+        $method = $this->getAccessTokenMethod();
+        $url = $this->getAccessTokenUrl($params);
+
+        // 不要なparamsを削除する。
+        unset($params[SmaregiClientCredentials::CONTRACT_ID_FIELD_NAME]);
+
+        $options = $this->optionProvider->getAccessTokenOptions($this->getAccessTokenMethod(), $params);
+
+        return $this->getRequest($method, $url, $options);
+    }
+
+    /**
+     * @codeCoverageIgnore
+     *
      * @param AccessToken $token
      *
      * @throws IdentityProviderException
@@ -86,17 +128,29 @@ final class SmaregiProvider extends AbstractProvider
         return $response;
     }
 
+    /**
+     * @codeCoverageIgnore
+     *
+     * @return string
+     */
     protected function getScopeSeparator(): string
     {
         return ' ';
     }
 
+    /**
+     * @codeCoverageIgnore
+     *
+     * @return string
+     */
     protected function getPkceMethod(): string
     {
         return parent::PKCE_METHOD_S256;
     }
 
     /**
+     * @codeCoverageIgnore
+     *
      * @return string[]
      */
     protected function getDefaultScopes(): array
@@ -105,6 +159,8 @@ final class SmaregiProvider extends AbstractProvider
     }
 
     /**
+     * @codeCoverageIgnore
+     *
      * @param ResponseInterface $response
      * @param array<string, mixed> $data
      *
@@ -121,6 +177,8 @@ final class SmaregiProvider extends AbstractProvider
     }
 
     /**
+     * @codeCoverageIgnore
+     *
      * @param array<string, mixed> $response
      * @param AccessToken $token
      *

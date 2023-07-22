@@ -4,7 +4,7 @@ declare(strict_types=1);
 require_once '../../vendor/autoload.php';
 
 use Dotenv\Dotenv;
-use Nonz250\SmaregiApiPhp\Login\SmaregiProvider;
+use Nonz250\SmaregiApiPhp\Auth\SmaregiProvider;
 
 session_start();
 
@@ -58,6 +58,8 @@ try {
     ]);
 
     $resourceOwner = $provider->getResourceOwner($accessToken);
+
+    echo var_export($resourceOwner->toArray(), true);
 
     $accessToken = $provider->getAccessToken('refresh_token', [
         'refresh_token' => $accessToken->getRefreshToken(),

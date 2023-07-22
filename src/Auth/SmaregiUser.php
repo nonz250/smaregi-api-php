@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Nonz250\SmaregiApiPhp\Login;
+namespace Nonz250\SmaregiApiPhp\Auth;
 
 use League\OAuth2\Client\Provider\ResourceOwnerInterface;
 

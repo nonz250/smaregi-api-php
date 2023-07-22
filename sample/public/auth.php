@@ -4,7 +4,7 @@ declare(strict_types=1);
 require_once '../../vendor/autoload.php';
 
 use Dotenv\Dotenv;
-use Nonz250\SmaregiApiPhp\Login\SmaregiProvider;
+use Nonz250\SmaregiApiPhp\Auth\SmaregiProvider;
 
 session_start();
 
@@ -20,7 +20,9 @@ $provider = new SmaregiProvider(
 if (headers_sent()) {
     throw new RuntimeException('Headers were already sent.');
 }
-$authorizationUrl = $provider->getAuthorizationUrl();
+$authorizationUrl = $provider->getAuthorizationUrl([
+    'scope' => ['openid', 'email', 'profile', 'offline_access', 'pos.products:read', 'pos.customers:read'],
+]);
 $_SESSION['sampleState'] = $provider->getState();
 $_SESSION['samplePkceCode'] = $provider->getPkceCode();
 header('Location: ' . $authorizationUrl);
