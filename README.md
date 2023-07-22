@@ -6,6 +6,12 @@
 
 上記 PSR にて決められたインターフェースで実装したスマレジ・プラットフォーム API クライアントライブラリです。
 
+## Installation
+
+```shell
+composer require nonz250/smaregi-api-php
+```
+
 ## Usage
 
 * [仕様書 | ドキュメント | スマレジ・デベロッパーズ](https://developers.smaregi.dev/documents/api_reference)
