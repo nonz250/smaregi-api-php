@@ -9,6 +9,9 @@ use Nonz250\SmaregiApiPhp\Foundation\Request;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\UriInterface;
 
+/**
+ * @deprecated Auth\SmaregiProvider を利用してください。
+ */
 final class TokenRequest extends Request
 {
     protected const METHOD = RequestMethodInterface::METHOD_POST;
