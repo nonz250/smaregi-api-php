@@ -41,7 +41,7 @@ $accessToken = $provider->getAccessToken(new SmaregiClientCredentials(), [
 ]);
 ```
 
-### ユーザーアクセストークン
+### ユーザーアクセストークン取得
 
 https://github.com/nonz250/smaregi-api-php/blob/main/sample/public/auth.php
 
