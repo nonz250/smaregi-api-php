@@ -59,8 +59,6 @@ try {
 
     $resourceOwner = $provider->getResourceOwner($accessToken);
 
-    echo htmlspecialchars(var_export($resourceOwner->toArray(), true));
-
     $accessToken = $provider->getAccessToken('refresh_token', [
         'refresh_token' => $accessToken->getRefreshToken(),
     ]);
@@ -68,3 +66,89 @@ try {
     echo htmlspecialchars($e->getMessage());
     exit();
 }
+?>
+
+<html lang="ja">
+<head>
+    <title>smaregi-api-php sample.</title>
+    <link rel="stylesheet" href="table.css" type="text/css"/>
+</head>
+<body>
+<h2>Resource Owner.</h2>
+<table>
+    <thead>
+    <tr>
+        <th class="key">項目名</th>
+        <th>値</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>sub</td>
+        <td><?php echo htmlspecialchars($resourceOwner->getId()); ?></td>
+    </tr>
+    <tr>
+        <td>contract.id</td>
+        <td><?php echo htmlspecialchars($resourceOwner->getContractId()); ?></td>
+    </tr>
+    <tr>
+        <td>contract.user_id</td>
+        <td><?php echo htmlspecialchars($resourceOwner->getUserId()); ?></td>
+    </tr>
+    <tr>
+        <td>contract.is_owner ( bool )</td>
+        <td><?php echo $resourceOwner->getIsOwner() ? 'true' : 'false'; ?></td>
+    </tr>
+    <tr>
+        <td>name</td>
+        <td><?php echo htmlspecialchars($resourceOwner->getName()); ?></td>
+    </tr>
+    <tr>
+        <td>email</td>
+        <td><?php echo htmlspecialchars($resourceOwner->getEmail()); ?></td>
+    </tr>
+    <tr>
+        <td>email_verified ( bool )</td>
+        <td><?php echo $resourceOwner->getEmailVerified() ? 'true' : 'false'; ?></td>
+    </tr>
+    <tr>
+        <td>all params ( array )</td>
+        <td><?php echo htmlspecialchars(json_encode($resourceOwner->toArray(), JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT)); ?></td>
+    </tr>
+    </tbody>
+</table>
+
+<h2>Access Token.</h2>
+<table>
+    <thead>
+    <tr>
+        <th class="key">項目名</th>
+        <th>値</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>token</td>
+        <td><?php echo htmlspecialchars((string)$accessToken->getToken()); ?></td>
+    </tr>
+    <tr>
+        <td>refresh_token</td>
+        <td><?php echo htmlspecialchars((string)$accessToken->getRefreshToken()); ?></td>
+    </tr>
+    <tr>
+        <td>expires_in</td>
+        <td><?php echo htmlspecialchars((string)$accessToken->getExpires()); ?></td>
+    </tr>
+    <tr>
+        <td>has_expires ( bool )</td>
+        <td><?php echo $accessToken->hasExpired() ? 'true' : 'false'; ?></td>
+    </tr>
+    <tr>
+        <td>all params ( array )</td>
+        <td><?php echo htmlspecialchars(json_encode($accessToken->getValues(), JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT)); ?></td>
+    </tr>
+    <tr>
+    </tbody>
+</table>
+</body>
+</html>

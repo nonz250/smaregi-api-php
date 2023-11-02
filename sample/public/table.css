@@ -1,0 +1,14 @@
+table {
+    border-collapse: collapse;
+    word-break: break-word;
+    width: 100%;
+    white-space: pre-wrap;
+}
+
+th, td {
+    border: 1px solid black;
+}
+
+th.key {
+    width: 30%;
+}
