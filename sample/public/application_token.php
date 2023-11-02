@@ -21,8 +21,8 @@ try {
         'scope' => ['pos.products:read', 'pos.customers:read'],
     ]);
 
-    echo $accessToken->getToken();
+    echo htmlspecialchars($accessToken->getToken());
 } catch (Throwable $e) {
-    echo $e->getMessage();
+    echo htmlspecialchars($e->getMessage());
     exit();
 }
