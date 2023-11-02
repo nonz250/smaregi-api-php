@@ -2,7 +2,7 @@ name: smaregi-api-php
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "add-ci" ]
   pull_request:
     types: [opened, edited, reopened]
 
