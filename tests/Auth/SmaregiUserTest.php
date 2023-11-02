@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Tests\Login;
+namespace Tests\Auth;
 
 use Exception;
 use Faker\Factory;

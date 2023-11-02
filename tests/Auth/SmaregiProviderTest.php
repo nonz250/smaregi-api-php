@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Tests\Login;
+namespace Tests\Auth;
 
 use Faker\Factory;
 use Nonz250\SmaregiApiPhp\Auth\SmaregiProvider;
