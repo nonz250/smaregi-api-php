@@ -4,33 +4,46 @@ declare(strict_types=1);
 namespace Tests\Auth;
 
 use Faker\Factory;
+use League\OAuth2\Client\Provider\AbstractProvider;
+use Mockery;
 use Nonz250\SmaregiApiPhp\Auth\SmaregiProvider;
-use Tests\TestCase;
+use PHPUnit\Framework\TestCase;
 
 final class SmaregiProviderTest extends TestCase
 {
-    private SmaregiProvider $smaregiProvider;
+    private Mockery\MockInterface $smaregiProviderStub;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->smaregiProvider = new SmaregiProvider(
-            (string)$_ENV['SMAREGI_IDP_HOST'],
-            (string)$_ENV['SMAREGI_CLIENT_ID'],
-            (string)$_ENV['SMAREGI_CLIENT_SECRET']
+        $this->smaregiProviderStub = Mockery::mock(
+            AbstractProvider::class,
+            new SmaregiProvider('', '', ''),
         );
     }
 
     public function testLogin(): void
     {
         $faker = Factory::create();
+
+        $this->smaregiProviderStub
+            ->shouldReceive('getAuthorizationUrl')
+            ->andReturn($faker->url);
+        $this->smaregiProviderStub
+            ->shouldReceive('getState')
+            ->andReturn($faker->text);
+        $this->smaregiProviderStub
+            ->shouldReceive('getPkceCode')
+            ->andReturn($faker->text);
+
         $contractId = $faker->text;
-        $authorizationUrl = $this->smaregiProvider->getAuthorizationUrl();
+        $authorizationUrl = $this->smaregiProviderStub->getAuthorizationUrl();
         $this->assertNotEmpty($authorizationUrl);
-        $this->assertNotEmpty($this->smaregiProvider->getState());
-        $this->assertNotEmpty($this->smaregiProvider->getPkceCode());
-        $this->assertStringContainsString('/authorize/token', $this->smaregiProvider->getBaseAccessTokenUrl([]));
-        $this->assertStringContainsString('/app/' . $contractId . '/token', $this->smaregiProvider->getBaseAccessTokenUrl([
+        $this->assertNotEmpty($this->smaregiProviderStub->getState());
+        $this->assertNotEmpty($this->smaregiProviderStub->getPkceCode());
+        $this->assertStringContainsString('/authorize', $this->smaregiProviderStub->getBaseAuthorizationUrl());
+        $this->assertStringContainsString('/authorize/token', $this->smaregiProviderStub->getBaseAccessTokenUrl([]));
+        $this->assertStringContainsString('/app/' . $contractId . '/token', $this->smaregiProviderStub->getBaseAccessTokenUrl([
             'grant_type' => 'client_credentials',
             'contract_id' => $contractId,
         ]));

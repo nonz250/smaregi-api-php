@@ -42,7 +42,8 @@
         "fakerphp/faker": "^1.23",
         "nyholm/psr7": "^1.8",
         "php-http/curl-client": "^2.3",
-        "vlucas/phpdotenv": "^5.5"
+        "vlucas/phpdotenv": "^5.5",
+        "mockery/mockery": "^1.6"
     },
     "suggest": {
         "nyholm/psr7": "A fast PHP7 implementation of PSR-7/PSR-17",

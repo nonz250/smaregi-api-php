@@ -65,7 +65,7 @@ use Nonz250\SmaregiApiPhp\Auth\SmaregiProvider;
 session_start();
 
 $provider = new SmaregiProvider(
-    'SMAREGI_IDP_HOST,
+    'SMAREGI_IDP_HOST',
     'SMAREGI_CLIENT_ID',
     'SMAREGI_CLIENT_SECRET',
     'http://localhost/callback.php',
@@ -124,6 +124,35 @@ $accessToken = $provider->getAccessToken('refresh_token', [
 ]);
 ```
 
+## Sample
+
+https://github.com/nonz250/smaregi-api-php/tree/main/sample
+
+```shell
+make build
+make sample
+```
+
+上記を実行後、 http://localhost へアクセスし、このライブラリを利用した際の実際の動作を確認することができます。
+
+このとき、 [スマレジ・デベロッパーズ](https://developers.smaregi.dev/) で取得できるクレデンシャル情報が必要なので、予めスマレジ・デベロッパーズアカウントを取得してください。
+
+https://developers.smaregi.jp/signup/
+
+スマレジ・デベロッパーズのアカウント登録ができたら新規にアプリを追加し、必要なクレデンシャル情報を取得してください。  
+※この際、パブリックアプリかプライベートアプリかは問いません。
+
+|変数名|内容|
+|-----|---|
+|SMAREGI_IDP_HOST|スマレジIdPサーバーのホスト。デフォルトはサンドボックス環境のホスト。|
+|SMAREGI_CONTRACT_ID|対象の契約ID|
+|SMAREGI_CLIENT_ID|対象のクライアントID|
+|SMAREGI_CLIENT_SECRET|対象のクライアントシークレット|
+
+`.env.example` を `.env` へコピーし上記のパラメーターに対応するよう、それぞれ適切な値を設定してください。
+
+https://github.com/nonz250/smaregi-api-php/tree/main/sample/public/.env.example
+
 ## Contributing
 
 このリポジトリは Docker の利用を推奨しています。
@@ -146,34 +175,13 @@ Docker における開発環境をビルドします。
 make build
 ```
 
-`/tests/.env.example` 及び `sample/public/.env.example` をそれぞれ `.env` としてコピーし、自分のスマレジ契約のクレデンシャル情報に置き換えてください。
-スマレジ契約のクレデンシャル情報は [スマレジ・デベロッパーズ](https://developers.smaregi.dev/) に登録し、アプリを作成することで取得してください。
-この際、パブリックアプリかプライベートアプリかは問いません。
-
-|変数名|内容|
-|-----|---|
-|SMAREGI_IDP_HOST|スマレジIdPサーバーのホスト。デフォルトはサンドボックス環境のホスト。|
-|SMAREGI_CONTRACT_ID|対象の契約ID|
-|SMAREGI_CLIENT_ID|対象のクライアントID|
-|SMAREGI_CLIENT_SECRET|対象のクライアントシークレット|
-
-### Sample
-
-https://github.com/nonz250/smaregi-api-php/tree/main/sample
-
-```shell
-make sample
-```
-
-上記を実行後、 http://localhost へアクセス。
-
 ### Please execute before make Pull Request.
 
 Pull Request を作成する前には `make pr` を実行してください。
 
-* formatter
-* static analyzer
-* unit test
+* formatter ( PHP CS Fixer )
+* static analyzer ( PHPStan )
+* unit test ( PHPUnit )
 
 が実行されます。
 
