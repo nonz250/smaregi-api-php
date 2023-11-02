@@ -7,11 +7,11 @@ use League\OAuth2\Client\Provider\ResourceOwnerInterface;
 
 final class SmaregiUser implements ResourceOwnerInterface
 {
-    /** @var array<string, mixed> */
+    /** @var array<string, bool|int|string> */
     private array $data;
 
     /**
-     * @param array<string, mixed> $data
+     * @param array<string, bool|int|string> $data
      */
     public function __construct(array $data)
     {
@@ -20,32 +20,32 @@ final class SmaregiUser implements ResourceOwnerInterface
 
     public function getId(): string
     {
-        return (string)($this->data['sub'] ?? ''); // @phpstan-ignore-line
+        return (string)($this->data['sub'] ?? '');
     }
 
     public function getContractId(): string
     {
-        return (string)($this->data['contract']['id'] ?? ''); // @phpstan-ignore-line
+        return (string)($this->data['contract']['id'] ?? '');
     }
 
     public function getUserId(): string
     {
-        return (string)($this->data['contract']['user_id'] ?? ''); // @phpstan-ignore-line
+        return (string)($this->data['contract']['user_id'] ?? '');
     }
 
     public function getIsOwner(): bool
     {
-        return (bool)($this->data['contract']['is_owner'] ?? false); // @phpstan-ignore-line
+        return (bool)($this->data['contract']['is_owner'] ?? false);
     }
 
     public function getName(): string
     {
-        return (string)($this->data['name'] ?? ''); // @phpstan-ignore-line
+        return (string)($this->data['name'] ?? '');
     }
 
     public function getEmail(): string
     {
-        return (string)($this->data['email'] ?? ''); // @phpstan-ignore-line
+        return (string)($this->data['email'] ?? '');
     }
 
     public function getEmailVerified(): bool
@@ -54,7 +54,7 @@ final class SmaregiUser implements ResourceOwnerInterface
     }
 
     /**
-     * @return array<string, mixed>
+     * @return array<string, bool|int|string>
      */
     public function toArray(): array
     {
