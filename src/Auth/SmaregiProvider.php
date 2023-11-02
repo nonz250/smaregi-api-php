@@ -179,7 +179,7 @@ final class SmaregiProvider extends AbstractProvider
     /**
      * @codeCoverageIgnore
      *
-     * @param array<string, mixed> $response
+     * @param array<string, bool|int|string> $response
      * @param AccessToken $token
      *
      * @return ResourceOwnerInterface
