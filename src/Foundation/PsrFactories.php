@@ -8,6 +8,9 @@ use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\UriFactoryInterface;
 
+/**
+ * @codeCoverageIgnore
+ */
 final class PsrFactories
 {
     private RequestFactoryInterface $requestFactory;
@@ -30,6 +33,9 @@ final class PsrFactories
         $this->uriFactory = $uriFactory;
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function getRequestFactory(): RequestFactoryInterface
     {
         return $this->requestFactory;
@@ -51,6 +57,9 @@ final class PsrFactories
         return $this->streamFactory;
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function getUriFactory(): UriFactoryInterface
     {
         return $this->uriFactory;
