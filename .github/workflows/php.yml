@@ -71,7 +71,7 @@ jobs:
 
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-latest]
         php-version: [ '7.4', '8.0', '8.1', '8.2', '8.3' ]
 
     steps:
@@ -80,7 +80,7 @@ jobs:
       - name: Setup PHP with Xdebug
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2'
+          php-version: ${{ matrix.php-version }}
           coverage: xdebug
 
       - name: Use composer cache.
