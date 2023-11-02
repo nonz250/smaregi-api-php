@@ -15,14 +15,14 @@ try {
 
     if ($error) {
         throw new RuntimeException(implode('<br>', [
-            htmlspecialchars('error: ' . ($_GET['error'] ?? '')),
-            htmlspecialchars('error_description: ' . ($_GET['error_description'] ?? '')),
-            htmlspecialchars('hint: ' . ($_GET['hint'] ?? '')),
-            htmlspecialchars('message: ' . ($_GET['message'] ?? '')),
+            'error: ' . ($_GET['error'] ?? ''),
+            'error_description: ' . ($_GET['error_description'] ?? ''),
+            'hint: ' . ($_GET['hint'] ?? ''),
+            'message: ' . ($_GET['message'] ?? ''),
         ]));
     }
 } catch (Throwable $e) {
-    echo $e->getMessage();
+    echo htmlspecialchars($e->getMessage());
     exit();
 }
 
@@ -38,7 +38,7 @@ try {
         throw new RuntimeException('Invalid state.');
     }
 } catch (Throwable $e) {
-    echo $e->getMessage();
+    echo htmlspecialchars($e->getMessage());
     exit();
 }
 
@@ -59,12 +59,12 @@ try {
 
     $resourceOwner = $provider->getResourceOwner($accessToken);
 
-    echo var_export($resourceOwner->toArray(), true);
+    echo htmlspecialchars(var_export($resourceOwner->toArray(), true));
 
     $accessToken = $provider->getAccessToken('refresh_token', [
         'refresh_token' => $accessToken->getRefreshToken(),
     ]);
 } catch (Throwable $e) {
-    echo $e->getMessage();
+    echo htmlspecialchars($e->getMessage());
     exit();
 }
