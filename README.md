@@ -1,3 +1,5 @@
+[![smaregi-api-php](https://github.com/nonz250/smaregi-api-php/actions/workflows/php.yml/badge.svg)](https://github.com/nonz250/smaregi-api-php/actions/workflows/php.yml)
+
 # smaregi-api-php
 
 * [PSR-7: HTTP message interfaces - PHP-FIG](https://www.php-fig.org/psr/psr-7/)
