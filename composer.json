@@ -49,5 +49,10 @@
         "nyholm/psr7": "A fast PHP7 implementation of PSR-7/PSR-17",
         "symfony/http-client": "Symfony HttpClient component implement PSR-18",
         "php-http/curl-client": "Another PSR-18 HttpClient implementation"
+    },
+    "scripts": {
+        "php-cs-fixer": "vendor/bin/php-cs-fixer fix --dry-run",
+        "phpstan": "vendor/bin/phpstan analyze",
+        "phpunit": "vendor/bin/phpunit --coverage-text"
     }
 }
