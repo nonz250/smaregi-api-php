@@ -44,7 +44,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-php-
 
-      - name: Run test suite
+      - name: Run PHP CS Fixer.
         run: composer run-script php-cs-fixer
 
   phpstan:
@@ -61,7 +61,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-php-
 
-      - name: Run test suite
+      - name: Run PHPStan.
         run: composer run-script phpstan
 
   phpunit:
@@ -69,6 +69,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
+      - name: Setup PHP with Xdebug
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          coverage: xdebug
 
       - name: Use composer cache.
         uses: actions/cache@v3
